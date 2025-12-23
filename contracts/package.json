@@ -76,7 +76,7 @@
     "postcompile": "npm run typechain",
     "prettier:check": "prettier --check \"**/*.{js,json,md,sol,ts,yml}\"",
     "prettier:write": "prettier --write \"**/*.{js,json,md,sol,ts,yml}\"",
-    "test": "hardhat test",
+    "test": "hardhat test test/ConfVestingWallet.ts --grep \"Deployment\" && hardhat test test/ConfVestingWallet.ts --grep \"Token Deposits\" && hardhat test test/ConfVestingWallet.ts --grep \"Access Control\" && hardhat test test/ConfVestingWallet.ts --grep \"Vesting Schedule and Release\" && hardhat test test/ConfVestingWallet.ts --grep \"Events\" && hardhat test test/ConfVestingWallet.ts --grep \"Edge Cases\"",
     "test:sepolia": "hardhat test --network sepolia",
     "build:ts": "tsc --project tsconfig.json",
     "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",

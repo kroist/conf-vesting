@@ -7,7 +7,9 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2022"], // get error cause (ErrorOptions)
+    "lib": [
+      "es2022"
+    ], // get error cause (ErrorOptions)
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -17,7 +19,17 @@
     "strict": true,
     "target": "es2022" // get error cause (ErrorOptions)
   },
-  "exclude": ["node_modules"],
-  "files": ["./hardhat.config.ts"],
-  "include": ["src/**/*", "tasks/**/*", "test/**/*", "deploy/**/*", "types/"]
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "./hardhat.config.ts"
+  ],
+  "include": [
+    "src/**/*",
+    "tasks/**/*",
+    "test/**/*",
+    "deploy/**/*",
+    "types/"
+  ]
 }
