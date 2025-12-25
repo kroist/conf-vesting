@@ -26,8 +26,8 @@ For detailed instructions see:
    ```bash
    npx hardhat vars set MNEMONIC
 
-   # Set your Infura API key for network access
-   npx hardhat vars set INFURA_API_KEY
+   # Set your RPC url for network access
+   npx hardhat vars set RPC_URL
 
    # Optional: Set Etherscan API key for contract verification
    npx hardhat vars set ETHERSCAN_API_KEY

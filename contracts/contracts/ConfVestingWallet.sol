@@ -18,29 +18,31 @@ contract ConfVestingWallet is Context, Ownable, ZamaEthereumConfig {
     address private immutable _beneficiary;
     uint64 private immutable _start;
     uint64 private immutable _duration;
+    address private immutable _token;
 
     /**
      * @dev Sets the owner (contract creator), beneficiary (token receiver), the start timestamp
      * and the vesting duration (in seconds) of the vesting wallet.
      */
     constructor(
+        address token,
         address initialOwner,
         address beneficiaryAddress,
         uint64 startTimestamp,
         uint64 durationSeconds
     ) payable Ownable(initialOwner) {
         require(beneficiaryAddress != address(0), "Beneficiary cannot be zero address");
+        _token = token;
         _beneficiary = beneficiaryAddress;
         _start = startTimestamp;
         _duration = durationSeconds;
     }
 
     /**
-     * @dev Modifier to restrict access to owner and beneficiary only.
+     * @dev Getter for the token address.
      */
-    modifier onlyAuthorized() {
-        require(msg.sender == owner() || msg.sender == _beneficiary, "Not authorized");
-        _;
+    function token() public view virtual returns (address) {
+        return _token;
     }
 
     /**
@@ -74,14 +76,14 @@ contract ConfVestingWallet is Context, Ownable, ZamaEthereumConfig {
     /**
      * @dev Total allocation of tokens for vesting. Can only be viewed by owner and beneficiary.
      */
-    function totalAllocation(address token) public view virtual onlyAuthorized returns (euint64) {
+    function totalAllocation(address token) public view virtual returns (euint64) {
         return _totalAllocation[token];
     }
 
     /**
      * @dev Amount of token already released. Can only be viewed by owner and beneficiary.
      */
-    function released(address token) public view virtual onlyAuthorized returns (euint64) {
+    function released(address token) public view virtual returns (euint64) {
         return _erc7984Released[token];
     }
 
@@ -90,7 +92,8 @@ contract ConfVestingWallet is Context, Ownable, ZamaEthereumConfig {
      * Updates the total allocation and transfers tokens from the caller to this contract.
      * Emits a {TokensDeposited} event.
      */
-    function depositTokens(address token, externalEuint64 encryptedAmount, bytes calldata inputProof) public virtual {
+    function depositTokens(externalEuint64 encryptedAmount, bytes calldata inputProof) public virtual {
+        address token = _token;
         // Validate and convert encrypted input
         euint64 amount = FHE.fromExternal(encryptedAmount, inputProof);
 
